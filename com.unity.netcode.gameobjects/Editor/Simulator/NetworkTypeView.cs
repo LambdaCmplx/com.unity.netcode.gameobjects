@@ -1,9 +1,11 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
 using System.Linq;
 using UnityEditor;
 using UnityEditor.UIElements;
 using UnityEngine;
 using UnityEngine.UIElements;
+using Object = UnityEngine.Object;
 
 namespace Unity.Netcode.Editor
 {
@@ -87,20 +89,24 @@ namespace Unity.Netcode.Editor
         {
             var presets = NetworkTypePresets.Values.Select(x => x.Name).ToList();
             presets.Add(Custom);
-
+            
+            var configurationName = m_NetworkSimulator.SimulatorConfiguration != null
+                ? m_NetworkSimulator.SimulatorConfiguration.Name
+                : string.Empty;
+            
             PresetDropdown.choices = presets;
             PresetDropdown.index = HasCustomValue
                 ? PresetDropdown.choices.IndexOf(Custom)
-                : PresetDropdown.choices.IndexOf(m_NetworkSimulator.SimulatorConfiguration.Name);
+                : PresetDropdown.choices.IndexOf(configurationName);
         }
 
         bool HasValue => m_NetworkSimulator.SimulatorConfiguration != null;
 
         bool HasCustomValue => HasValue && NetworkTypePresets.Values.Any(SimulatorConfigurationMatchesPresetName) == false;
 
-        bool SimulatorConfigurationMatchesPresetName(NetworkSimulatorConfiguration configuration)
+        bool SimulatorConfigurationMatchesPresetName(NetworkSimulatorConfigurationObject configurationObject)
         {
-            return configuration.Name == m_NetworkSimulator.SimulatorConfiguration.Name;
+            return configurationObject.Name == m_NetworkSimulator.SimulatorConfiguration.Name;
         }
 
         void UpdateEnabled()

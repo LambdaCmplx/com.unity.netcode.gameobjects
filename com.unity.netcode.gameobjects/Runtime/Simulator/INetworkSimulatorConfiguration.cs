@@ -2,12 +2,12 @@
 {
     public interface INetworkSimulatorConfiguration
     {
-        public string Name { get; set; }
-        public string Description { get; set; }
-        public int PacketDelayMs { get; set; }
-        public int PacketJitterMs { get; set; }
-        public int PacketLossInterval { get; set; }
-        public int PacketLossPercent { get; set; }
-        public int PacketDuplicationPercent { get; set; }
+        string Name { get; set; }
+        string Description { get; set; }
+        int PacketDelayMs { get; set; }
+        int PacketJitterMs { get; set; }
+        int PacketLossInterval { get; set; }
+        int PacketLossPercent { get; set; }
+        int PacketDuplicationPercent { get; set; }
     }
 }
